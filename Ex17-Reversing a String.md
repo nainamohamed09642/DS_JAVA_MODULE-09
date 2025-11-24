@@ -1,49 +1,91 @@
-# Ex17 Reversing a String Using Stack Data Structure
-## DATE:8-10-2025A
+# Ex18 Simulation of a Ticket Counter Using Queue (Linked List Implementation)
+## DATE: 8-10-2025
 ## AIM:
-To write a Java program that reverses an input string using a stack, without using built-in reverse functions.
-
+To simulate the functioning of a ticket counter that operates on a First-In-First-Out (FIFO) basis using a queue implemented via a linked list in Java.
 ## Algorithm
 1. Start the program.
-2. Create an empty stack of characters.
-3. Traverse the string and push each character onto the stack.
-4. Pop each element from the stack and append it to a new string.
-5. Display the reversed string.
-6. Stop the program.   
+2. Create a Node class with data and next attributes.
+3. Implement a Queue class with enqueue() and dequeue() methods.
+4. Enqueue customers (represented by integers or names).
+5. Dequeue each customer in FIFO order as they are served.
+6. Display the queue before and after serving customers.
+7. Stop the program.
+ 
 
 ## Program:
 ```
- /*
-Program to reverse an input string using a stack
+/*
+Program to simulate the functioning of a ticket counter that operates on a First-In-First-Out (FIFO)
 Developed by: NAINA MOHAMED Z
 RegisterNumber: 212223230131
 */
-import java.util.*;
-
-public class ReverseStringStack {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a string: ");
-        String str = sc.nextLine();
-        Stack<Character> stack = new Stack<>();
-        for (char ch : str.toCharArray())
-            stack.push(ch);
-
-        StringBuilder reversed = new StringBuilder();
-        while (!stack.isEmpty())
-            reversed.append(stack.pop());
-
-        System.out.println("Reversed string: " + reversed.toString());
-        sc.close();
+class Node {
+    String data;
+    Node next;
+    Node(String data) {
+        this.data = data;
+        this.next = null;
     }
 }
+
+class Queue {
+    Node front, rear;
+    
+    void enqueue(String data) {
+        Node newNode = new Node(data);
+        if (rear == null) {
+            front = rear = newNode;
+            return;
+        }
+        rear.next = newNode;
+        rear = newNode;
+    }
+
+    void dequeue() {
+        if (front == null) {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        System.out.println(front.data + " has been served.");
+        front = front.next;
+        if (front == null)
+            rear = null;
+    }
+
+    void display() {
+        if (front == null) {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        Node temp = front;
+        System.out.print("Current Queue: ");
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+}
+
+public class TicketCounter {
+    public static void main(String[] args) {
+        Queue q = new Queue();
+        q.enqueue("Alice");
+        q.enqueue("Bob");
+        q.enqueue("Charlie");
+        q.enqueue("Diana");
+        q.display();
+        q.dequeue();
+        q.display();
+    }
+} 
 */
 ```
 
 ## Output:
 
-<img width="387" height="67" alt="image" src="https://github.com/user-attachments/assets/1fbbe30c-51fc-4199-a629-fd0780fd951b" />
+<img width="380" height="102" alt="image" src="https://github.com/user-attachments/assets/cb065e4b-eac2-4808-950e-08f08b566715" />
 
 
 ## Result:
-Thus, the program successfully reverses the given string using a stack without relying on built-in reverse functions.
+Thus, the program successfully simulates a ticket counter queue where customers are served in FIFO order using a linked list-based queue implementation.
